@@ -8,13 +8,18 @@ Stable tag: 1.0
 License: LGPL
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Brings Khan Academy exercises into your WordPress blogs.
+Brings Khan Academy exercises into your WordPress blogs. 
 
 == Description ==
 
-Brings Khan Academy exercises into your WordPress blogs.
+Khan Exercises for WordPress plugin lets you host Khan Academy exercises in your WordPress blog.
+[Khan Exercises](http://www.khanacademy.org/exercisedashboard) are great and free to everyone!
+However, the framework is very complex; it's difficult to embed its exercises into another web site.
+We made <a href='https://github.com/psimakov/khan-exercises'>framework changes</a>
+than make it easier to embed the exercises and collect the exercise results right in your WordPress blog.
 
 == Installation ==
+
 
 Installation is very simple:
 
@@ -40,6 +45,15 @@ and placed into `/wp-content/khan-exercises/audit.log` or a database.
 
 The exercise framework is [MIT licensed](http://en.wikipedia.org/wiki/MIT_License).
 The exercises are protected under a [Creative Commons by-nc-sa license](http://creativecommons.org/licenses/by-nc-sa/3.0/).
+
+== Who developed this plugin and why? ==
+
+This plugin was developed by [Pavel Simakov]( http://www.softwaresecretweapons.com/jspwiki/about)
+and uses a fork of Khan Academy Exercises Framework. Pavel currently works at Google as a lead engineer
+on [Google Course Builder](https://code.google.com/p/course-builder/) and other educational initiatives.
+He is also a founder of an adaptive education site [itestyou.com](http://www.itestyou.com).
+Engaging interactive activities are fundamental to effective learning. Khan Academy Exercises are great!
+Now it’s also easy to create and use them everywhere.
 
 == Screenshots ==
 
