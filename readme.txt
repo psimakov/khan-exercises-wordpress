@@ -33,12 +33,13 @@ Khan Academy official website does not serve any files or receives any data from
 
 = Where do the exercise results go? =
 
-Every time a visitor answers an exercise the results are sent to your WordPress installation and placed into `/wp-content/khan-exercises/audit.log` or a database.
+Every time a visitor answers an exercise the results are sent to your WordPress installation
+and placed into `/wp-content/khan-exercises/audit.log` or a database.
 
 = What are the licensing terms for using Khan Exercise Framework and Khan Exercises in my blog? =
 
 The exercise framework is [MIT licensed](http://en.wikipedia.org/wiki/MIT_License).
-The exercises are protected under a [Creative Commons by-nc-sa license] (http://creativecommons.org/licenses/by-nc-sa/3.0/).
+The exercises are protected under a [Creative Commons by-nc-sa license](http://creativecommons.org/licenses/by-nc-sa/3.0/).
 
 == Screenshots ==
 
