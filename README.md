@@ -1,4 +1,4 @@
 khan-exercises-wordpress
 ========================
 
-Please view the [readme.txt](readme.txt) file for more information.
+Please view the [https://github.com/psimakov/khan-exercises-wordpress/blob/master/readme.txt](readme.txt) for more information.
