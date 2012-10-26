@@ -20,7 +20,6 @@ than make it easier to embed the exercises and collect the exercise results righ
 
 == Installation ==
 
-
 Installation is very simple:
 
 1. Download plugin zip file, unzip it
