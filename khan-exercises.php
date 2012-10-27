@@ -33,6 +33,7 @@ License: LGPL
 
 */
 
+
 /*
 
 	The plugin helps to:
@@ -81,9 +82,25 @@ function ity_ef_render_warning_template() {
 }
 
 
-// render all exercises found in the folder
+// render all exercises found in the /khan-exercises/exercises/... folder
 function ity_ef_render_list_items() {
-	$body = "<span style='font-weight: bold; font-size: larger;'>Khan Academy Exercises</a></span> (see <a href='".plugins_url('/khan-exercises/README.md', __FILE__)."'>license terms</a>)<br/>Choose one of the exercises below:<ul style='padding-left: 32px; list-style: circle inside;'>";
+	$body = 
+		'<style>
+			li.ity-ef-item div {
+				display: none;
+			}
+			li.ity-ef-item:hover div {
+				margin-left: 48px;
+				display: block;
+			}
+			li.ity-ef-item:hover div pre {
+				background-color: #D0D0FF;
+				margin: 0px;
+				padding: 4px;
+			}
+		</style>';
+
+	$body .= "<span style='font-weight: bold; font-size: larger;'>Khan Academy Exercises</a></span> (see <a href='".plugins_url('/khan-exercises/README.md', __FILE__)."'>license terms</a>)<br/>Choose one of the exercises below:<ul style='padding-left: 32px; list-style: circle inside;'>";
 	if ($handle = opendir(dirname(__FILE__).'/khan-exercises/exercises')) {
 		while (false !== ($entry = readdir($handle))) {
 			if (ity_ef_starts_with($entry, "khan-") || $entry == "." || $entry == ".." || $entry == "test") {
@@ -91,7 +108,18 @@ function ity_ef_render_list_items() {
 			}
 			$slug = str_replace(".html", "", $entry);
 			$caption = str_replace("_", " ", $slug);
-			$body .= "<li><a style='text-decoration: none;' href='".plugins_url('/khan-exercises/indirect/?ity_ef_slug=static:'.$slug, __FILE__)."'>".esc_html($caption)."</a></li>\n";
+			$url = plugins_url('/khan-exercises/indirect/?ity_ef_slug=static:'.$slug, __FILE__);
+			$embed = "
+<iframe 
+  src='".$url."&ity_ef_site=raw'
+  style='width: 100%; min-height: 600px; overflow: none; border: none;'
+>
+</iframe>";
+
+			$body .= "<li class='ity-ef-item'>";
+			$body .= "<a style='text-decoration: none;' href='".$url."'>".esc_html($caption)."</a>";
+			$body .= "<div>Here is how to embed:<br/><pre>".esc_html($embed)."</pre></div>";
+			$body .= "</li>\n";
 		}
 	}
 	$body .= "</ul>";
