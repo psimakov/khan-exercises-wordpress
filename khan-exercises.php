@@ -43,7 +43,7 @@ License: LGPL
 		+ display a dynamic exercise content in a themed post page
 			via custom ity_ef_render_indirect_$protocol_hook($identifier) function
 
-		+ embed exercise inside a post or a page using shortcode
+		+ embed exercise inside the post or page using shortcode
 			[khan_exercise src="static:absolute_value_of_complex_numbers" /]
 
 		+ embed exercise into any web page via <iframe>; render an exercise without header or footer
@@ -135,7 +135,7 @@ function ity_ef_render_list_items() {
 
 // render Khan Exercise container
 function ity_ef_render_container_template() {
-	$debug = is_admin();
+	$debug = current_user_can('manage_options');
 	return
 		'
         <header style="display: none;" />
@@ -176,7 +176,7 @@ function ity_ef_render_container_template() {
 function ity_ef_save_audit_data($json){
 	// get user information
 	global $current_user;
-    get_currentuserinfo();
+	get_currentuserinfo();
 
 	// decode json to extract specific fields
 	if (get_magic_quotes_gpc())
@@ -371,6 +371,5 @@ function ity_ef_shortcode_khan_exercise($atts, $content = null) {
 	}
 }
 add_shortcode('khan_exercise', 'ity_ef_shortcode_khan_exercise');
-
 
 ?>
