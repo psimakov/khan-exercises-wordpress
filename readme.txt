@@ -16,7 +16,8 @@ Khan Exercises for WordPress plugin lets you host Khan Academy exercises in your
 [Khan Exercises](http://www.khanacademy.org/exercisedashboard) are great and free to everyone!
 However, the framework is very complex; it's difficult to embed its exercises into another web site.
 We made <a href='https://github.com/psimakov/khan-exercises'>framework changes</a>
-than make it easier to embed the exercises and collect the exercise results right in your WordPress blog.
+than make it easier to embed the exercises and collect the exercise results right in your
+WordPress blog.
 
 == Installation ==
 
@@ -52,7 +53,7 @@ and uses a fork of Khan Academy Exercises Framework. Pavel currently works at Go
 on [Google Course Builder](https://code.google.com/p/course-builder/) and other educational initiatives.
 He is also a founder of an adaptive education site [itestyou.com](http://www.itestyou.com).
 Engaging interactive activities are fundamental to effective learning. Khan Academy Exercises are great!
-Now it’s also easy to create and use them everywhere.
+Now it's also easy to create and use them everywhere.
 
 == Screenshots ==
 

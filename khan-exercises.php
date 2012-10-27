@@ -43,7 +43,10 @@ License: LGPL
 		+ display a dynamic exercise content in a themed post page
 			via custom ity_ef_render_indirect_$protocol_hook($identifier) function
 
-		+ embed exercise via <iframe>; render an exercise without header or footer
+		+ embed exercise inside a post or a page using shortcode
+			[khan_exercise src="static:absolute_value_of_complex_numbers" /]
+
+		+ embed exercise into any web page via <iframe>; render an exercise without header or footer
 			<iframe src="/wp-content/plugins/khan-exercises/khan-exercises/indirect/?ity_ef_slug=static:adding_decimals&ity_ef_site=raw"></iframe>
 
 		+ make a page listing all available exercises
@@ -118,7 +121,10 @@ function ity_ef_render_list_items() {
 
 			$body .= "<li class='ity-ef-item'>";
 			$body .= "<a style='text-decoration: none;' href='".$url."'>".esc_html($caption)."</a>";
-			$body .= "<div>Here is how to embed:<br/><pre>".esc_html($embed)."</pre></div>";
+			$body .= "<div>";
+			$body .= "Here is how to embed via shortcode: <pre>[khan_exercise src='static:".$slug."' /]</pre>";
+			$body .= "Here is how to embed via &lt;iframe&gt;:<br/><pre>".esc_html($embed)."</pre>";
+			$body .= "</div>";
 			$body .= "</li>\n";
 		}
 	}
@@ -331,16 +337,40 @@ if (is_admin()){
 	}
 
 	function ity_ef_html_page() {
+		echo "<div style='padding: 16px; margin: 16px; max-width: 600px;'>";
 		echo "<h2>Khan Exercises for WordPress!</h2>";
 		echo ity_ef_render_warning_template();
-		echo "<h2>How many exercises are there?</h2>Here are all <a href='/?ity_ef_rule=list'>423 exercises</a> available in this distribution.";
+
+		echo "<h2>How many exercises are included?</h2>Here are all <a href='/?ity_ef_rule=list'>423 exercises</a> available in this distribution. Select an exercise and either link to it, embed it into a post or a page via shortcode, or embed it into any web page via &lt;iframe&gt;.";
+		
 		echo "<h2>Where is a demo?</h2>Follow <a href='".plugins_url('/khan-exercises/indirect/?ity_ef_slug=static:functions_2', __FILE__)."'>this link</a> to see a demo exercise. You should see a chart, a questions, and some buttons. It may take 3-4 seconds to load.";
-		echo "<h2>Can an exercise be embedded into an &lt;iframe&gt;?</h2>Yes. Follow <a href='".plugins_url('/khan-exercises/indirect/?ity_ef_slug=static:adding_fractions&ity_ef_site=raw', __FILE__)."'>this link</a> to see a demo exercise that has no header or footer (notice ity_ef_site=raw in the query string). It may take 3-4 seconds to load.";
-		echo "<h2>Where are the exercise results?</h2>Every time a visitor answers an exercise the results are sent to your WordPress installation and placed into `/wp-content/khan-exercises/audit.log` or a database. You can't get that file via web interface because we protected it with .htaccess; use FTP. Don't forget to back up this file when updating the plugin!";
-		echo "<h2>Can the exercise results be recorded into a database?</h2>Yes. Simply declare a new PHP function ity_ef_save_audit_data_hook(). Plugin will call it, instead of appending the data to a file.";
-		echo "<h2>Can the exercise source be created dynamically?</h2>Yes. Open the PHP source code for this plugin and look for the ity_ef_render_indirect_demo_hook() function. This function will be triggered when you follow <a href='".plugins_url('/khan-exercises/indirect/?ity_ef_slug=demo:identifier', __FILE__)."'>this link</a>. Note how the protocol name 'demo' in the link is mapped onto the ity_ef_render_indirect_$protocol_hook($identifier) function. Simply declare a new PHP function using a protocol name you desire and generate the exercise text in this function.";
-		echo "<h2>Why was this plugin developed?</h2>Khan Exercises are great! But the framework is very complex. It's difficult to embed an exercise into another web site. We made <a href='https://github.com/psimakov/khan-exercises'>some minor changes</a> to the Khan Exercise Framework so it's easier to embed the exercises and collect the exercise results. We hope to let many more people to use the exercises in their blogs as a teaching tool. We hope you will create new interactive educational content to help students to learn and get better.";
+		
+		echo "<h2>Can an exercise be embedded into a WordPress post or a page?</h2>Yes. Edit the post and insert the following code anywhere inside the post text: <code>[khan_exercise src=\"static:absolute_value_of_complex_numbers\" /]</code>. The proper shortcodes are listed for each of the <a href='/?ity_ef_rule=list'>423 exercises</a>.";
+		
+		echo "<h2>Can an exercise be embedded into an &lt;iframe&gt;?</h2>Yes. Follow <a href='".plugins_url('/khan-exercises/indirect/?ity_ef_slug=static:adding_fractions&ity_ef_site=raw', __FILE__)."'>this link</a> to see a demo exercise that has no header or footer (notice <code>ity_ef_site=raw</code> in the query string). It may take 3-4 seconds to load.";
+		
+		echo "<h2>Where are the exercise results?</h2>Every time a visitor answers an exercise the results are sent to your WordPress installation and placed into <code>/wp-content/khan-exercises/audit.log</code> or a database. You can't get that file via web interface because we protected it with .htaccess; use FTP. Don't forget to back up this file when updating the plugin!";
+		
+		echo "<h2>Can the exercise results be recorded into a database?</h2>Yes. Simply declare a new PHP function <code>ity_ef_save_audit_data_hook()</code>. Plugin will call this function, instead of appending the data to a file.";
+		
+		echo "<h2>Can the exercise source be created dynamically?</h2>Yes. Open the PHP source code for this plugin and look for the <code>ity_ef_render_indirect_demo_hook()</code> function. This function will be triggered when you follow <a href='".plugins_url('/khan-exercises/indirect/?ity_ef_slug=demo:identifier', __FILE__).'\'>this link</a>. Note how the protocol name <code>demo</code> in the link is mapped onto the <code>ity_ef_render_indirect_$protocol_hook($identifier)</code> function. Simply declare a new PHP function using a protocol name you desire and generate the exercise text in this function.';
+						
+		echo "</div>";
 	}
 }
+
+
+// add [khan_exercise src='protocol:identifier' /] shortcode
+function ity_ef_shortcode_khan_exercise($atts, $content = null) {
+	extract(shortcode_atts(array('src' => '#'), $atts));
+	if ($src){
+		$body = "<iframe src='".plugins_url('/khan-exercises/indirect/?ity_ef_slug='.$src, __FILE__)."&ity_ef_site=raw' scrolling='no' style='width: 100%; min-height: 600px; overflow: none; border: none;'></iframe>";
+		return $body;
+	} else {
+		return 'Expected a shortcode with \'src\' attribute, for example: [khan_exercise src="static:absolute_value_of_complex_numbers" /].';
+	}
+}
+add_shortcode('khan_exercise', 'ity_ef_shortcode_khan_exercise');
+
 
 ?>
