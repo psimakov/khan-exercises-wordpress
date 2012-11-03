@@ -33,38 +33,6 @@ License: LGPL
 
 */
 
-
-/*
-
-	The plugin helps to:
-		+ display a static exercise file in a themed post page
-			/wp-content/plugins/khan-exercises/khan-exercises/indirect/?ity_ef_slug=static:adding_decimals
-
-		+ display a dynamic exercise content in a themed post page
-			via custom ity_ef_render_indirect_$protocol_hook($identifier) function
-
-		+ embed exercise inside the post or page using shortcode
-			[khan_exercise src="static:absolute_value_of_complex_numbers" /]
-
-		+ embed exercise into any web page via <iframe>; render an exercise without header or footer
-			<iframe src="/wp-content/plugins/khan-exercises/khan-exercises/indirect/?ity_ef_slug=static:adding_decimals&ity_ef_site=raw"></iframe>
-
-		+ make a page listing all available exercises
-			/?ity_ef_rule=list
-
-		+ collect exercise results into audit.log file for all visitors,
-		  even anonymous; defent this file against viewing over HTTP
-
-		+ collect exercise results into a database
-			via custom ity_ef_save_audit_data_hook() function
-
-	Next steps:
-		- let user see the results of his attempts
-		- put an exercise source code inside the post
-
-*/
-
-
 function ity_ef_starts_with($haystack, $needle){
     $length = strlen($needle);
     return (substr($haystack, 0, $length) === $needle);
@@ -74,12 +42,12 @@ function ity_ef_starts_with($haystack, $needle){
 // render licensing terms warning section
 function ity_ef_render_warning_template() {
 	return "
-	<p style='background-color: #D0FFD0; padding: 16px; margin: 16px; max-width: 500px;'>
+	<p style='background-color: #67E667; padding: 16px; margin: 16px; max-width: 500px;'>
 	<strong>LICENSE TERMS:</strong><br/>
 	<br/>
 	This plugin is <strong>Copyright 2012 <a href='https://github.com/psimakov/khan-exercises-wordpress'>Pavel Simakov</a></strong> and is licensed under <a href='http://www.gnu.org/licenses/lgpl-2.1.html'>LGPL 2</a>.<br/>
 	<br/>
-	It also includes a distribution of Khan Academy Exercise Framework & Khan Academy Exercises both <strong>Copyright 2012 <a href='".plugins_url('/khan-exercises/README.md', __FILE__)."'>Khan Academy</a></strong>. The exercise framework is <a href='http://en.wikipedia.org/wiki/MIT_License'>[MIT licensed]</a>. The exercises are protected under a <a href='http://creativecommons.org/licenses/by-nc-sa/3.0/'>[Creative Commons by-nc-sa license]</a>.<br/>
+	This plugin includes a distribution of Khan Academy Exercise Framework & Khan Academy Exercises both <strong>Copyright 2012 <a href='".plugins_url('/khan-exercises/README.md', __FILE__)."'>Khan Academy</a></strong>. The exercise framework is <a href='http://en.wikipedia.org/wiki/MIT_License'>[MIT licensed]</a>. The exercises are protected under a <a href='http://creativecommons.org/licenses/by-nc-sa/3.0/'>[Creative Commons by-nc-sa license]</a>.<br/>
 	<br/>
 	You required by law to <strong>respect</strong> the above licensing terms!</p>";
 }
@@ -97,7 +65,7 @@ function ity_ef_render_list_items() {
 				display: block;
 			}
 			li.ity-ef-item:hover div pre {
-				background-color: #D0D0FF;
+				background-color: #D0D0D0;
 				margin: 0px;
 				padding: 4px;
 			}
@@ -108,22 +76,18 @@ function ity_ef_render_list_items() {
 		while (false !== ($entry = readdir($handle))) {
 			if (ity_ef_starts_with($entry, "khan-") || $entry == "." || $entry == ".." || $entry == "test") {
 				continue;
-			}
+			} 
 			$slug = str_replace(".html", "", $entry);
 			$caption = str_replace("_", " ", $slug);
 			$url = plugins_url('/khan-exercises/indirect/?ity_ef_slug=static:'.$slug, __FILE__);
-			$embed = "
-<iframe 
-  src='".$url."&ity_ef_site=raw'
-  style='width: 100%; min-height: 600px; overflow: none; border: none;'
->
-</iframe>";
+			$src = plugins_url('/embed.js?static:'.$slug, __FILE__);
+			$embed = "<script\n  type='text/javascript'\n  src='".$src."'\n></script>";
 
 			$body .= "<li class='ity-ef-item'>";
 			$body .= "<a style='text-decoration: none;' href='".$url."'>".esc_html($caption)."</a>";
 			$body .= "<div>";
-			$body .= "Here is how to embed via shortcode: <pre>[khan_exercise src='static:".$slug."' /]</pre>";
-			$body .= "Here is how to embed via &lt;iframe&gt;:<br/><pre>".esc_html($embed)."</pre>";
+			$body .= "Here is how to embed an exercise into a WordPress post or page using a shortcode: <pre>[khan_exercise src='static:".$slug."' /]</pre>";
+			$body .= "Here is how to embed an exercise into any web page using an &lt;iframe&gt;:<br/><pre>".esc_html($embed)."</pre>";
 			$body .= "</div>";
 			$body .= "</li>\n";
 		}
@@ -244,7 +208,7 @@ function ity_ef_controller(){
 			<head>
 			    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 			<head>
-			<body><div style="margin-left: 48px;">';
+			<body><div style="margin-left: 2%;">';
 		echo ity_ef_render_container_template();
 		echo '</div></body></html>';
 		exit;
@@ -305,13 +269,13 @@ function ity_ef_render_indirect(){
 
 
 // demo custom function to generate dynamic exercise text
-function ity_ef_render_indirect_demo_hook() {
+function ity_ef_render_indirect_demo_hook($identifier) {
  	echo
 		'<!DOCTYPE html>
 		<html data-require="word-problems math subhints">
 		<head>
 			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-			<title>Multiple Choice Test</title>
+			<title>Multiple Choice Test ('.esc_html($identifier).')</title>
 			<script src="../khan-exercise.js"></script>
 		</head>
 		<body>
@@ -337,24 +301,50 @@ if (is_admin()){
 	}
 
 	function ity_ef_html_page() {
+		echo '<style>
+		  div#ity-ef-about a {
+			  background-color: #FFDE40;
+			  padding-left: 4px;
+			  padding-right: 4px;
+			  color: #444444;
+		  }
+
+		  div#ity-ef-about a:hover {
+			  background-color: #876ED7;
+		  }
+		</style>';
 		echo "<div style='padding: 16px; margin: 16px; max-width: 600px;'>";
 		echo "<h2>Khan Exercises for WordPress!</h2>";
 		echo ity_ef_render_warning_template();
 
-		echo "<h2>How many exercises are included?</h2>Here are all <a href='/?ity_ef_rule=list'>423 exercises</a> available in this distribution. Select an exercise and either link to it, embed it into a post or a page via shortcode, or embed it into any web page via &lt;iframe&gt;.";
+		echo "<div id='ity-ef-about'>";
+
+		echo "<h2>Where is a demo?</h2>Follow <a href='".plugins_url('/khan-exercises/indirect/?ity_ef_slug=static:functions_2', __FILE__)."'>this link</a> to see a demo exercise. You should see a blog page with a chart, a question, and 'Check Answer' button. It may take 3-4 seconds to load.";
+
+		echo "<h2>How many exercises are included?</h2>There are <a href='/?ity_ef_rule=list'>423&nbsp;exercises</a> available in this distribution. Select an exercise and either link to it, embed it into a post or a page via shortcode, or embed it into any web page via &lt;iframe&gt;.";
+				
+		echo "<h2>Can an exercise be embedded into a WordPress post or a page?</h2>Yes. Edit the post and insert the following code anywhere inside the post text: <code>[khan_exercise src=\"static:absolute_value_of_complex_numbers\" /]</code>. The proper shortcodes are listed next to each of the <a href='/?ity_ef_rule=list'>423&nbsp;exercises</a>.";
 		
-		echo "<h2>Where is a demo?</h2>Follow <a href='".plugins_url('/khan-exercises/indirect/?ity_ef_slug=static:functions_2', __FILE__)."'>this link</a> to see a demo exercise. You should see a chart, a questions, and some buttons. It may take 3-4 seconds to load.";
-		
-		echo "<h2>Can an exercise be embedded into a WordPress post or a page?</h2>Yes. Edit the post and insert the following code anywhere inside the post text: <code>[khan_exercise src=\"static:absolute_value_of_complex_numbers\" /]</code>. The proper shortcodes are listed for each of the <a href='/?ity_ef_rule=list'>423 exercises</a>.";
-		
-		echo "<h2>Can an exercise be embedded into an &lt;iframe&gt;?</h2>Yes. Follow <a href='".plugins_url('/khan-exercises/indirect/?ity_ef_slug=static:adding_fractions&ity_ef_site=raw', __FILE__)."'>this link</a> to see a demo exercise that has no header or footer (notice <code>ity_ef_site=raw</code> in the query string). It may take 3-4 seconds to load.";
+		echo "<h2>Can an exercise be embedded into any web page using an &lt;iframe&gt;?</h2>Yes. Follow <a href='".plugins_url('/khan-exercises/indirect/?ity_ef_slug=static:adding_fractions&ity_ef_site=raw', __FILE__)."'>this link</a> to see a demo exercise that has no header or footer (notice <code>ity_ef_site=raw</code> in the query string). You can put this page into an &lt;iframe&gt; on any web page you like. The proper &lt;iframe&gt; embed code is listed next to each of the <a href='/?ity_ef_rule=list'>423&nbsp;exercises</a>.";
 		
 		echo "<h2>Where are the exercise results?</h2>Every time a visitor answers an exercise the results are sent to your WordPress installation and placed into <code>/wp-content/khan-exercises/audit.log</code> or a database. You can't get that file via web interface because we protected it with .htaccess; use FTP. Don't forget to back up this file when updating the plugin!";
 		
-		echo "<h2>Can the exercise results be recorded into a database?</h2>Yes. Simply declare a new PHP function <code>ity_ef_save_audit_data_hook()</code>. Plugin will call this function, instead of appending the data to a file.";
+		echo "<h2>Can the exercise results be recorded into a database?</h2>Yes. Simply declare a new PHP function <code>ity_ef_save_audit_data_hook($json)</code>, and provide an alternative storage implementation. Plugin will call this new function, instead of appending the data to a file.";
 		
-		echo "<h2>Can the exercise source be created dynamically?</h2>Yes. Open the PHP source code for this plugin and look for the <code>ity_ef_render_indirect_demo_hook()</code> function. This function will be triggered when you follow <a href='".plugins_url('/khan-exercises/indirect/?ity_ef_slug=demo:identifier', __FILE__).'\'>this link</a>. Note how the protocol name <code>demo</code> in the link is mapped onto the <code>ity_ef_render_indirect_$protocol_hook($identifier)</code> function. Simply declare a new PHP function using a protocol name you desire and generate the exercise text in this function.';
-						
+		echo "<h2>Can the exercise source be created dynamically or loaded from a database?</h2>Yes. Every time you navigate to an exercise a <code>ity_ef_render_indirect()</code> function is triggered. It expects the protocol and the identifier of the exercise passed as a <code>ity_ef_slug</code> query string parameter, for example <code>ity_ef_slug=static:absolute_value</code>. For accessing the exercises located on the file system we use <code>static</code> as a protocol name, handler for which simply loads the file (with a name <code>absolute_value</code> in the example above) from the file system. You can declare a new protocol name and provide your own handler function to either construct the exercises on the fly or load them from a database.<br/>
+		<br/> 
+		We have a simple demo included to help you get started. Open the PHP source code for this plugin and look at the <code>ity_ef_render_indirect_demo_hook($identifier)</code> function. See the exercise it generates in PHP code by following <a href='".plugins_url('/khan-exercises/indirect/?ity_ef_slug=demo:my_exercise_id_1', __FILE__).'\'>this link</a>. Note how the protocol name <code>demo</code> in the link URL is mapped onto the <code>ity_ef_render_indirect_demo_hook($identifier)</code> function name. Similarly if you want to declare a protocol named <code>foo</code>, you can handle it in the function named <code>ity_ef_render_indirect_foo_hook($identifier)</code> and so on. You can declare new function anywhere in your WordPress installation, but probably better to do it in your theme <code>functions.php</code> file.';
+		
+		echo "<h2>Can I contribute to this project?</h2>Yes. You can contribute new exercises and the code improvements to our <a href='https://github.com/psimakov/khan-exercises'>khan-exercises</a> and <a href='https://github.com/psimakov/khan-exercises-wordpress'>khan-exercises-wordpress</a> open-source Git repositories. Here is what is currently missing:
+		<ol>
+		  <li>enable dynamic iframe height resize when embedding initially and when the hints are gradually revealed</li>
+		  <li>enable storing of the exercise results in a database and viewing own exercise results by a user</li>
+		  <li>remove unnecessary JavaScript and CSS from the exercise framework</li>
+		  <li>administer a series of exercises in a defined order</li>
+		  <li>collect exercise responses without immediately revealing the answers to the user</li>
+		</ol>";
+
+		echo "</div>";
 		echo "</div>";
 	}
 }
