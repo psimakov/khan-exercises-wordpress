@@ -1,6 +1,6 @@
 === Khan Exercises for WordPress ===
 Contributors: psimakov
-Donate link: http://www.softwaresecretweapons.com/jspwiki/about
+Donate link: http://www.softwaresecretweapons.com/jspwiki/khan-exercises
 Tags: Khan, Khan Academy, exercises, worksheets, Math, school
 Requires at least: 2.7.0
 Tested up to: 3.4
@@ -12,12 +12,7 @@ Brings Khan Academy exercises into your WordPress blogs.
 
 == Description ==
 
-Khan Exercises for WordPress plugin lets you host Khan Academy exercises in your WordPress blog.
-[Khan Exercises](http://www.khanacademy.org/exercisedashboard) are great and free to everyone!
-However, the framework is very complex; it's difficult to embed its exercises into another web site.
-We made <a href='https://github.com/psimakov/khan-exercises'>framework changes</a>
-than make it easier to embed the exercises and collect the exercise results right in your
-WordPress blog.
+Khan Exercises for WordPress plugin lets you host Khan Academy exercises in your WordPress blog. [Khan Exercises](http://www.khanacademy.org/exercisedashboard) make learning complex subjects fun and they are free to everyone! However, the framework is very complex; it's difficult to embed its exercises into another web site. We made <a href='https://github.com/psimakov/khan-exercises'>framework changes</a> making it easier to embed the exercises and collect the exercise results right in your WordPress blog.
 
 == Installation ==
 
@@ -33,27 +28,19 @@ Installation is very simple:
 
 = Where are the exercises hosted? =
 
-All exercise files, HTML, CSS and JavaScript are served from your WordPress installation.
-Khan Academy official website does not serve any files or receives any data from your site.
+All exercise files, HTML, CSS and JavaScript are served from your WordPress installation. Khan Academy official website does not serve any files or receives any data from your site.
 
 = Where do the exercise results go? =
 
-Every time a visitor answers an exercise the results are sent to your WordPress installation
-and placed into `/wp-content/khan-exercises/audit.log` or a database.
+Every time a visitor answers an exercise the results are sent to your WordPress installation and placed into `/wp-content/khan-exercises/audit.log` or a database.
 
 = What are the licensing terms for using Khan Exercise Framework and Khan Exercises in my blog? =
 
-The exercise framework is [MIT licensed](http://en.wikipedia.org/wiki/MIT_License).
-The exercises are protected under a [Creative Commons by-nc-sa license](http://creativecommons.org/licenses/by-nc-sa/3.0/).
+The exercise framework is [MIT licensed](http://en.wikipedia.org/wiki/MIT_License). The exercises are protected under a [Creative Commons by-nc-sa license](http://creativecommons.org/licenses/by-nc-sa/3.0/).
 
 == Who developed this plugin and why? ==
 
-This plugin was developed by [Pavel Simakov]( http://www.softwaresecretweapons.com/jspwiki/about)
-and uses a fork of Khan Academy Exercises Framework. Pavel currently works at Google as a lead engineer
-on [Google Course Builder](https://code.google.com/p/course-builder/) and other educational initiatives.
-He is also a founder of an adaptive education site [itestyou.com](http://www.itestyou.com).
-Engaging interactive activities are fundamental to effective learning. Khan Academy Exercises are great!
-Now it's also easy to create and use them everywhere.
+This plugin was developed by [Pavel Simakov]( http://www.softwaresecretweapons.com/jspwiki/about) and uses a fork of Khan Academy Exercises Framework. Pavel currently works at Google as a lead engineer on [Google Course Builder](https://code.google.com/p/course-builder/) and other educational initiatives. He is also a founder of an adaptive education site [itestyou.com](http://www.itestyou.com). Engaging interactive activities are fundamental to effective learning. Khan Academy Exercises are great! Now it's also easy to create and use them everywhere on the Web.
 
 == Screenshots ==
 
@@ -66,8 +53,3 @@ Now it's also easy to create and use them everywhere.
 
 = 1.0 =
 * First version
-
-== Upgrade Notice ==
-
-= 1.0 =
-First version
