@@ -145,9 +145,6 @@ function ity_ef_save_audit_data($json){
 	global $current_user;
 	get_currentuserinfo();
 
-	// decode json to extract specific fields
-	if (get_magic_quotes_gpc())
-		$json = stripslashes($json);
 	$decoded = json_decode($json, true);
 	$pass = $decoded['pass'] ? "pass" : "fail";
 	$context = $decoded['context'];
@@ -184,6 +181,11 @@ function ity_ef_controller(){
 
 	// handle audit data postback
 	$data = $wp_query->get('ity_ef_audit');
+
+	// WP always has magic quotes on; remove them here
+	$data = stripslashes_deep($data);
+
+	// find the right callback
 	if ($data) {
 		if (function_exists('ity_ef_save_audit_data_hook')){
 			ity_ef_save_audit_data_hook($data);
