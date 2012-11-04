@@ -8173,14 +8173,8 @@ a.big-button:active > div {
 .card-type-endofreview .current-card-contents {
   padding: 20px;
 }
-.current-card #problemarea {
-  margin-top: 35px;
-}
 .current-card #workarea {
   margin-top: 22px;
-}
-.current-card #answer_area_wrap {
-  margin-top: 52px;
 }
 #footer {
   /*
