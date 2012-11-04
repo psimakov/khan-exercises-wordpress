@@ -1283,6 +1283,11 @@ var Khan = (function() {
         // Add the problem into the page
         Khan.scratchpad.resize();
 
+		// resize the container
+		if (typeof Khan.onItyEfResize == 'function'){
+			Khan.onItyEfResize();
+		}
+
         // Enable the all answer input elements except the check answer button.
         $("#answercontent input").not("#check-answer-button")
             .removeAttr("disabled");
@@ -2318,6 +2323,11 @@ var Khan = (function() {
 
                 // Grow the scratchpad to cover the new hint
                 Khan.scratchpad.resize();
+
+				// resize the container
+				if(typeof Khan.onItyEfResize == 'function') {
+					Khan.onItyEfResize();
+				}
 
                 // Disable the get hint button & add final_answer class
                 if (hints.length === 0) {
