@@ -203,6 +203,9 @@ function ity_ef_controller(){
 		} else {
 			ity_ef_save_audit_data($data);
 		}
+		
+		// return valid JSON
+		echo "{}";
 		exit;
 	}
 	
