@@ -357,11 +357,11 @@ if (is_admin()){
 
 		echo "<h2>Is there a demo?</h2>Yes. Follow <a href='".plugins_url('/khan-exercises/indirect/?ity_ef_format=iframe&ity_ef_slug=static:functions_2', __FILE__)."'>this link</a> to see a demo exercise. You should see a blog page with a chart, a question and 'Check Answer' button. It may take 3-4 seconds to load.";
 
-		echo "<h2>How many exercises are included?</h2>There are <a href='/?ity_ef_rule=list'>423&nbsp;exercises</a> available. After you select an exercise, you can either link to it, embed it into a post or a page via shortcode, or embed it into any web page via &lt;iframe&gt;.";
+		echo "<h2>How many exercises are included?</h2>There are <a href='".get_bloginfo('url')."/?ity_ef_rule=list'>423&nbsp;exercises</a> available. After you select an exercise, you can either link to it, embed it into a post or a page via shortcode, or embed it into any web page via &lt;iframe&gt;.";
 				
-		echo "<h2>Can an exercise be embedded into a WordPress post or a page?</h2>Yes. Yes. Edit the post and insert the following code anywhere inside the post text (including the square brackets): <code>[khan_exercise src=\"static:absolute_value_of_complex_numbers\" /]</code>. The proper shortcodes are listed next to each of the <a href='/?ity_ef_rule=list'>423&nbsp;exercises</a>.";
+		echo "<h2>Can an exercise be embedded into a WordPress post or a page?</h2>Yes. Yes. Edit the post and insert the following code anywhere inside the post text (including the square brackets): <code>[khan_exercise src=\"static:absolute_value_of_complex_numbers\" /]</code>. The proper shortcodes are listed next to each of the <a href='".get_bloginfo('url')."/?ity_ef_rule=list'>423&nbsp;exercises</a>.";
 		
-		echo "<h2>Can an exercise be embedded into any web page using an &lt;iframe&gt;?</h2>Yes. Follow <a href='".plugins_url('/khan-exercises/indirect/?ity_ef_slug=static:adding_fractions&ity_ef_site=raw', __FILE__)."'>this link</a> to see a demo exercise that has no header or footer (notice <code>ity_ef_site=raw</code> in the query string). You can put this page into an &lt;iframe&gt; on any web page you like. The proper &lt;iframe&gt; embed code is listed next to each of the <a href='/?ity_ef_rule=list'>423&nbsp;exercises</a>. If you embed an exercise into a website that has a different domain name than your WordPress blog, dynamic exercise &lt;iframe&gt; height adjustment may not work.";
+		echo "<h2>Can an exercise be embedded into any web page using an &lt;iframe&gt;?</h2>Yes. Follow <a href='".plugins_url('/khan-exercises/indirect/?ity_ef_slug=static:adding_fractions&ity_ef_site=raw', __FILE__)."'>this link</a> to see a demo exercise that has no header or footer (notice <code>ity_ef_site=raw</code> in the query string). You can put this page into an &lt;iframe&gt; on any web page you like. The proper &lt;iframe&gt; embed code is listed next to each of the <a href='".get_bloginfo('url')."/?ity_ef_rule=list'>423&nbsp;exercises</a>. If you embed an exercise into a website that has a different domain name than your WordPress blog, dynamic exercise &lt;iframe&gt; height adjustment may not work.";
 		
 		echo "<h2>Can an exercise be embedded into a WordPress post without an &lt;iframe&gt;?</h2>Yes, but... If your theme uses advanced JavaScript libraries like JQuery, YUI or Google Analytics they will likely conflict with the JavaScript code of the exercises. Using an &lt;iframe&gt; resolves any possible issues. You can try <a href='".plugins_url('/khan-exercises/indirect/?ity_ef_slug=static:functions_2', __FILE__)."'>this link</a> to see how embedding works without &lt;iframe&gt;. Note that we have removed the query string parameter <code>ity_ef_format=iframe</code>, which controls whether an exercise is embedded directly into a WordPress page or linked into it via an &lt;iframe&gt;. If page does not load or you see a JavaScript error - your blog should use &lt;iframe&gt; embedding.";
 
@@ -395,7 +395,7 @@ function ity_ef_shortcode_khan_exercise($atts, $content = null) {
 		$body =
 			"<script
 			  type='text/javascript'
-			  src='http://engedu.vokamis.com/wp-content/plugins/khan-exercises/embed.js?".$src."'
+			  src='".plugins_url("/embed.js?".$src, __FILE__)."'
 			></script>";
 		return $body;
 	} else {
