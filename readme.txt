@@ -4,7 +4,7 @@ Donate link: http://www.softwaresecretweapons.com/jspwiki/khan-exercises
 Tags: Khan, Khan Academy, exercises, worksheets, Math, school
 Requires at least: 2.7.0
 Tested up to: 3.4
-Stable tag: 1.0
+Stable tag: trunk
 License: LGPL
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,17 +12,17 @@ Brings Khan Academy exercises into your WordPress blogs.
 
 == Description ==
 
-Khan Exercises for WordPress plugin lets you host Khan Academy exercises in your WordPress blog. [Khan Exercises](http://www.khanacademy.org/exercisedashboard) make learning complex subjects fun and they are free to everyone! However, the framework is very complex; it's difficult to embed its exercises into another web site. We made <a href='https://github.com/psimakov/khan-exercises'>framework changes</a> making it easier to embed the exercises and collect the exercise results right in your WordPress blog.
+This Khan Exercises for WordPress plugin lets you host Khan Academy exercises in your WordPress blog. [Khan Exercises](http://www.khanacademy.org/exercisedashboard) make learning complex subjects fun and they are free to everyone! However, the framework is very complex; it's difficult to embed its exercises into another web site. We made <a href='https://github.com/psimakov/khan-exercises'>framework changes</a>, which make it easier to embed the exercises and collect the exercise results right in your WordPress blog.
 
 == Installation ==
 
 Installation is very simple:
 
-1. Download plugin zip file, unzip it
-2. Upload `khan-exercises.php` and all other files to the `/wp-content/plugins/khan-exercises/` directory
-3. Activate the `Khan Exercises` plugin through the `Plugins` menu in WordPress
-4. Login as Admin and go to `Settings` > `Khan Exercises`
-5. Review the plugin settings page and navigate the links to see exercises
+1. Download plugin zip file, and unzip it.
+2. Upload `khan-exercises.php` and all other files to the `/wp-content/plugins/khan-exercises/` directory.
+3. Activate the `Khan Exercises` plugin through the `Plugins` menu in WordPress.
+4. Login as Admin and go to `Settings` > `Khan Exercises`.
+5. Review the plugin settings page and navigate the links to see the exercises.
 
 == Frequently Asked Questions ==
 
@@ -32,7 +32,7 @@ All exercise files, HTML, CSS and JavaScript are served from your WordPress inst
 
 = Where do the exercise results go? =
 
-Every time a visitor answers an exercise the results are sent to your WordPress installation and placed into `/wp-content/khan-exercises/audit.log` or a database.
+Every time a visitor answers an exercise the results are sent to your WordPress installation and placed into `/wp-content/khan-exercises/audit.log` file or a database.
 
 = What are the licensing terms for using Khan Exercise Framework and Khan Exercises in my blog? =
 
@@ -52,4 +52,5 @@ This plugin was developed by [Pavel Simakov]( http://www.softwaresecretweapons.c
 == Changelog ==
 
 = 1.0 =
+
 * First version
