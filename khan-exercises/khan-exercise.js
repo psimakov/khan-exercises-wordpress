@@ -2052,6 +2052,8 @@ var Khan = (function() {
 			var curTime = new Date().getTime();
 
 			var data = {
+				"random": "" + Math.random() + Math.random(),
+				"location": encodeURIComponent(window.location.href),
                 "context": exerciseId,
                 "seed": problemSeed,
 				"time_taken" : Math.round((curTime - lastAction) / 1000),
