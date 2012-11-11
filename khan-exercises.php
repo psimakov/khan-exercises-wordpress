@@ -3,7 +3,7 @@
 Plugin Name: Khan Exercises for WordPress
 Plugin URI: https://github.com/psimakov/khan-exercises-wordpress
 Description: Brings Khan Academy exercises into your WordPress blogs.
-Version: 1.0
+Version: 1.1
 Author: pavel@vokamis.com (Pavel Simakov)
 Author URI: https://github.com/psimakov/khan-exercises-wordpress
 License: LGPL

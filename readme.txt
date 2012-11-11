@@ -51,6 +51,10 @@ This plugin was developed by [Pavel Simakov]( http://www.softwaresecretweapons.c
 
 == Changelog ==
 
+= 1.1 =
+
+* Bug Fix! A DirectoryIndex was expected from ('/') to the blog home ('/my_blog'); now works properly without DirectoryIndex.
+
 = 1.0 =
 
 * First version
