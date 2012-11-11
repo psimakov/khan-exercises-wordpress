@@ -2064,7 +2064,7 @@ var Khan = (function() {
 				"pass": pass};
 			
             $.ajax({
-                url: '/',
+                url: './',
                 type: "GET",
                 data: 'ity_ef_audit=' + JSON.stringify(data),
                 contentType: "application/json",
@@ -3030,8 +3030,8 @@ var Khan = (function() {
 			}
 
 			var site = getParam("ity_ef_site");
-			if (site == 'raw') return "/?ity_ef_rule=raw";
-			return "/?ity_ef_rule=container"; 
+			if (site == 'raw') return "./?ity_ef_rule=raw";
+			return "./?ity_ef_rule=container"; 
 		}
 
 

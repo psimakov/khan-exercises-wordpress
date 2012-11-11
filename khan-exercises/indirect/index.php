@@ -27,10 +27,10 @@
 require_once "../../../../../wp-config.php";
 
 // check if plugin is installed and render the dynamic content
-if (!function_exists('ity_ef_render_indirect')){
-	echo 'Failed to find ity_ef_render_indirect() function. Is Khan Exercises Plugin active?';
+if (!function_exists('ity_ef_controller')){
+	echo 'Failed to find ity_ef_controller() function. Is Khan Exercises Plugin active?';
 } else {
-	ity_ef_render_indirect();
+	ity_ef_controller();
 }
 
 ?>

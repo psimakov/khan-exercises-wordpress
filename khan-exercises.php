@@ -184,14 +184,24 @@ function ity_ef_query_vars( $query_vars ){
 }
 add_filter('query_vars', 'ity_ef_query_vars');
 
+// gets a query string parameter by name and rmoves magic quotes
+function ity_ef_get_param($name){
+	if (array_key_exists($name, $_GET)) {
+		$value = $_GET[$name];
+		if (get_magic_quotes_gpc()) {
+			$value = stripslashes($value);
+		}
+		return $value;
+	}
+	return null;
+}
 
 // handle here all custom URL's supported by our plugin
 add_action('template_redirect', 'ity_ef_controller', 1);
 function ity_ef_controller(){
-	global $wp_query;
-
-	// handle audit data postback
-	$data = $wp_query->get('ity_ef_audit');
+	$data = ity_ef_get_param('ity_ef_audit');
+	$rule = ity_ef_get_param('ity_ef_rule');
+	$slug = ity_ef_get_param('ity_ef_slug');
 
 	// WP always has magic quotes on; remove them here
 	$data = stripslashes_deep($data);
@@ -210,7 +220,7 @@ function ity_ef_controller(){
 	}
 	
 	// render exercise container
-	if ($wp_query->get('ity_ef_rule') == "container") {
+	if ($rule == "container") {
 		get_header();
 		echo '<div style="width: 100%;" align="center"><div style="width: 85%;" align="left">';
 		echo ity_ef_render_container_template();
@@ -220,7 +230,7 @@ function ity_ef_controller(){
 	}
 
 	// render raw
-	if ($wp_query->get('ity_ef_rule') == "raw") {
+	if ($rule == "raw") {
 		echo 
 			'<!DOCTYPE html>
 			<html">
@@ -234,19 +244,23 @@ function ity_ef_controller(){
 	}
 
 	// list all exercises
-	if ($wp_query->get('ity_ef_rule') == "list") {
+	if ($rule == "list") {
 		get_header();
 		echo "<div style='margin: 48px;'>".ity_ef_render_list_items()."</div>";
 		get_footer();
 		exit;
 	}
+	
+	// handle indirect
+	if ($slug) {
+		ity_ef_render_indirect($slug);
+	}
 }
 
 
 // render content of exercise not located on the file system
-function ity_ef_render_indirect(){
+function ity_ef_render_indirect($slug){
 	// figure out a protocol and an identifier from the request
-	$slug = $_GET["ity_ef_slug"]; 
 	$parts = explode(":", $slug);
 	if (count($parts) != 2) {
 		echo "Error processing request. Expected 'ity_ef_slug' in a forms of 'protocol:identifier'.";
