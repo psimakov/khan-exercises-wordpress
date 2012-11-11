@@ -275,9 +275,9 @@ function ity_ef_render_indirect($slug){
 	}
 
 	// sanitize identifier
-	$identifier = preg_replace('/[^0-9a-zA-Z_\-]/', '', $parts[1]);
+	$identifier = preg_replace('/[^0-9a-zA-Z_\-\.]/', '', $parts[1]);
 	if ($identifier != $parts[1]) {
-		echo "Identifier name can only have '0-9a-zA-Z_\-'.";
+		echo "Identifier name can only have '0-9a-zA-Z_\-\.'.";
 		exit;
 	}
 
