@@ -63,7 +63,7 @@ function ity_ef_resize_height(id){
 	var scripts = document.getElementsByTagName('script');
 	var parts = scripts[scripts.length - 1].src.split('?');
 	var path = parts[0];	// resource
-	var base = path.split('/').slice(0, -1).join('/')+'/';		// remove last filename part of path
+	var base = path.split('/').slice(0, -1).join('/');		// remove last filename part of path
 
 	// embed frame uid
 	if (typeof(window['ity_ef_uid']) == "undefined"){
